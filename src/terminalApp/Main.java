@@ -78,6 +78,9 @@ public class Main {
 			case 3:
 				System.out.println("Forgot Password");
 				break;
+			case 4:
+				System.out.println("Exiting");
+				break;
 			default:
 				System.out.println("invalid input");
 				break;
