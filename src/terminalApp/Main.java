@@ -39,9 +39,8 @@ public class Main {
 				System.out.println("enter your password");
 				String password = sc.next();
 				System.out.println("");
-				User user = new User(firstName, lastName, gender, dob, email, password);
 				// call registration method
-				boolean registration = userService.register(user);
+				boolean registration = userService.register(new User(firstName, lastName, gender, dob, email, password));
 				// and print registration status in console in the registration method
 				if (registration) {
 					System.out.println("registration is successful");
@@ -59,11 +58,15 @@ public class Main {
 					String username = sc.next();
 					System.out.println("enter your password");
 					String password1 = sc.next();
+					login = userService.login(new User(username, password1));
 					// call login method
 					// set login true if login successful
-					login = true;
-					System.out.println("login successful");
-				}
+					if (login) {
+						System.out.println("login is successful");
+					}
+					else {
+						System.out.println("login is failed");
+					}				}
 				while (login == true) {
 					String[] loginMenu = { "show all tweets", "show my tweets", "show a users tweet", "logout" };
 					for (int j = 0; j < loginMenu.length; j++) {

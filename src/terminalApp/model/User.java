@@ -8,6 +8,12 @@ public class User {
 	private String email;
 	private String password;
 
+	public User(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
 	public User(String firstName, String lastName, String gender, int dob, String email, String password) {
 		super();
 		this.firstName = firstName;
