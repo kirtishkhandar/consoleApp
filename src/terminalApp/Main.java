@@ -1,10 +1,18 @@
 package terminalApp;
 
+import java.sql.SQLException;
 import java.util.Scanner;
+
+import terminalApp.model.User;
+import terminalApp.service.UserService;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		
+		
+		UserService userService = new UserService();
+		
 		int a = 0;
 		while (a != 4) {
 			Scanner sc = new Scanner(System.in); // System.in is a standard input stream
@@ -22,16 +30,24 @@ public class Main {
 				String firstName = sc.next();
 				System.out.println("enter your last name");
 				String lastName = sc.next();
-				System.out.println("enter your email");
-				String email = sc.next();
+				System.out.println("enter your gender");
+				String gender = sc.next();
 				System.out.println("enter your dob");
 				int dob = sc.nextInt();
+				System.out.println("enter your email");
+				String email = sc.next();
+				System.out.println("enter your password");
+				String password = sc.next();
 				System.out.println("");
+				User user = new User(firstName, lastName, gender, dob, email, password);
 				// call registration method
+				boolean registration = userService.register(user);
 				// and print registration status in console in the registration method
-				boolean registration = true;
 				if (registration) {
 					System.out.println("registration is successful");
+				}
+				else {
+					System.out.println("registration is failed");
 				}
 				break;
 			case 2:
@@ -42,7 +58,7 @@ public class Main {
 					System.out.println("enter your username");
 					String username = sc.next();
 					System.out.println("enter your password");
-					String password = sc.next();
+					String password1 = sc.next();
 					// call login method
 					// set login true if login successful
 					login = true;
