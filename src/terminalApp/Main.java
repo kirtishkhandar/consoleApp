@@ -8,21 +8,27 @@ import terminalApp.service.UserService;
 
 public class Main {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		
-		
+
 		UserService userService = new UserService();
-		
+
 		int a = 0;
 		while (a != 4) {
 			Scanner sc = new Scanner(System.in); // System.in is a standard input stream
 			System.out.println("\n");
+			System.out.println("Console App: ");
 			System.out.println("===================================================");
 			String[] mainMenu = { "Register", "Login", "Forgot Password", "exit" };
 			for (int i = 0; i < mainMenu.length; i++) {
 				System.out.print((i + 1) + ". " + mainMenu[i] + "\n");
 			}
-			a = sc.nextInt();
+			try {
+				a = sc.nextInt();
+			} catch (Exception e) {
+				System.err.println("Please use valid input as 1/2/3/4\nTry again");
+				continue;
+			}
 			switch (a) {
 			case 1:
 				System.out.println("Registration:");
@@ -40,12 +46,12 @@ public class Main {
 				String password = sc.next();
 				System.out.println("");
 				// call registration method
-				boolean registration = userService.register(new User(firstName, lastName, gender, dob, email, password));
+				boolean registration = userService
+						.register(new User(firstName, lastName, gender, dob, email, password));
 				// and print registration status in console in the registration method
 				if (registration) {
 					System.out.println("registration is successful");
-				}
-				else {
+				} else {
 					System.out.println("registration is failed");
 				}
 				break;
@@ -63,16 +69,22 @@ public class Main {
 					// set login true if login successful
 					if (login) {
 						System.out.println("login is successful");
-					}
-					else {
+					} else {
 						System.out.println("login is failed");
-					}				}
+					}
+				}
 				while (login == true) {
 					String[] loginMenu = { "show all tweets", "show my tweets", "show a users tweet", "logout" };
 					for (int j = 0; j < loginMenu.length; j++) {
 						System.out.print((j + 1) + ". " + loginMenu[j] + "\n");
 					}
-					int input1 = sc.nextInt();
+					int input1 = 0;
+					try {
+						input1 = sc.nextInt();
+					} catch (Exception e) {
+						System.err.println("Please use valid input as 1/2/3/4\nTry again");
+						break;
+					}
 					switch (input1) {
 					case 1:
 						System.out.println("Showing all tweets");
@@ -101,12 +113,12 @@ public class Main {
 				System.out.println("Exiting");
 				break;
 			default:
-				System.out.println("invalid input");
+				System.err.println("invalid input");
 				break;
 			}
 
 		}
 
-}
+	}
 
 }
