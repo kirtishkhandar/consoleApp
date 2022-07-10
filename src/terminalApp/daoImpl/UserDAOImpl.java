@@ -9,10 +9,12 @@ public class UserDAOImpl implements UserDAO {
 
 //	String driverClassName = "com.mysql.cj.jdbc.Driver";
 //	String url = "jdbc:mysql://localhost:3306/terminal_app_db";
+//	String username = "root";
+//	String password = "root";
 	String driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	String url = "jdbc:sqlserver:root@localhost:3306";
-	String username = "root";
-	String password = "root";
+	String url = "jdbc:sqlserver://LTIN287346\\\\MSSQLSERVERNEW:1433;databaseName=consoleApp";
+	String username = "ConsoleAppUser";
+	String password = "Ok";
 
 	@Override
 	public boolean registerUser(User user) throws SQLException, ClassNotFoundException {
