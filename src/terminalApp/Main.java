@@ -57,7 +57,7 @@ public class Main {
 				break;
 			case 2:
 				System.out.println("Login");
-				boolean login = true;
+				boolean login = false;
 				// call method to check if already login from db
 				if (login == false) {
 					System.out.println("enter your username");

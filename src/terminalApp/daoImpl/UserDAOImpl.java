@@ -7,22 +7,24 @@ import terminalApp.model.User;
 
 public class UserDAOImpl implements UserDAO {
 
-	String driverClassName = "sun.jdbc.odbc.JdbcOdbcDriver";
-	String url = "jdbc:odbc:XE";
-	String username = "scott";
-	String password = "tiger";
+//	String driverClassName = "sun.jdbc.odbc.JdbcOdbcDriver";
+	String driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+	String url = "jdbc:sqlserver://LTIN287346\\MSSQLSERVERNEW:1433;databaseName=consoleApp";
+	String username = "ConsoleAppUser";
+	String password = "Ok";
 
 	@Override
 	public boolean registerUser(User user) throws SQLException, ClassNotFoundException {
 		final int count;
 		Class.forName(driverClassName);
 		Connection con = DriverManager.getConnection(url, username, password);
-
 		PreparedStatement stmt1 = con.prepareStatement("select count(*) from Users where email = ? ");
 		stmt1.setString(1, user.getEmail());
 		ResultSet rs = stmt1.executeQuery();
+		int result;
 		if (rs.next()) {
 			count = rs.getInt(1);
+
 			if (count == 0) {
 				PreparedStatement stmt = con.prepareStatement("INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?)");
 				stmt.setString(1, user.getFirstName());
@@ -31,9 +33,12 @@ public class UserDAOImpl implements UserDAO {
 				stmt.setLong(4, user.getDob());
 				stmt.setString(5, user.getEmail());
 				stmt.setString(6, user.getPassword());
-				boolean result = stmt.execute();
+				result = stmt.executeUpdate();
 				con.close();
-				return result;
+				if (result == 0)
+					return false;
+				else
+					return true;
 			}
 
 			else
@@ -51,10 +56,14 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement stmt = con.prepareStatement("select * from Users where user = ? ");
 		stmt.setString(1, user.getEmail());
 		ResultSet rs = stmt.executeQuery();
+		System.out.println("resultset: "+rs.toString());
+		rs.next();
 		String extractedEmail = rs.getString("email");
+		System.out.println(extractedEmail);
 		String extractedPass = rs.getString("password");
+		System.out.println(extractedPass);
 
-		if (extractedEmail == user.getEmail() && extractedPass == user.getPassword())
+		if (extractedEmail.equalsIgnoreCase(user.getEmail()) && extractedPass.equalsIgnoreCase(user.getPassword()))
 			return true;
 		else
 			return false;
