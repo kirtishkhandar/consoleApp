@@ -12,7 +12,7 @@ public class UserDAOImpl implements UserDAO {
 //	String username = "root";
 //	String password = "root";
 	String driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	String url = "jdbc:sqlserver://LTIN287346\\\\MSSQLSERVERNEW:1433;databaseName=consoleApp";
+	String url = "jdbc:sqlserver://LTIN287346\\MSSQLSERVERNEW:1433;databaseName=consoleApp";
 	String username = "ConsoleAppUser";
 	String password = "Ok";
 
