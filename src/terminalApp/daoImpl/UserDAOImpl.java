@@ -35,11 +35,10 @@ public class UserDAOImpl implements UserDAO {
 				con.close();
 				return result;
 			}
-			
+
 			else
 				return false;
-		}
-		else
+		} else
 			return false;
 	}
 
