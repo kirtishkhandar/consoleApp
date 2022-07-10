@@ -7,11 +7,12 @@ import terminalApp.model.User;
 
 public class UserDAOImpl implements UserDAO {
 
-//	String driverClassName = "sun.jdbc.odbc.JdbcOdbcDriver";
+//	String driverClassName = "com.mysql.cj.jdbc.Driver";
+//	String url = "jdbc:mysql://localhost:3306/terminal_app_db";
 	String driverClassName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	String url = "jdbc:sqlserver://LTIN287346\\MSSQLSERVERNEW:1433;databaseName=consoleApp";
-	String username = "ConsoleAppUser";
-	String password = "Ok";
+	String url = "jdbc:sqlserver:root@localhost:3306";
+	String username = "root";
+	String password = "root";
 
 	@Override
 	public boolean registerUser(User user) throws SQLException, ClassNotFoundException {
@@ -53,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
 		Class.forName(driverClassName);
 		Connection con = DriverManager.getConnection(url, username, password);
 
-		PreparedStatement stmt = con.prepareStatement("select * from Users where user = ? ");
+		PreparedStatement stmt = con.prepareStatement("select * from Users where email = ? ");
 		stmt.setString(1, user.getEmail());
 		ResultSet rs = stmt.executeQuery();
 		System.out.println("resultset: "+rs.toString());
