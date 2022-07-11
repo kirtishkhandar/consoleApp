@@ -17,4 +17,18 @@ public class UserService {
 	public boolean login(User user) throws ClassNotFoundException, SQLException {
 		return userDao.loginUser(user);
 	}
+	
+	public boolean isLoggedIn(String username) throws ClassNotFoundException, SQLException {
+		return userDao.isLoggedIn(username);
+	}
+
+	public boolean doesUserExist(String username) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return userDao.doesUserExist(username);
+	}
+
+	public boolean logout(String username) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return userDao.logoutUser(username);
+	}
 }

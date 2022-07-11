@@ -45,6 +45,11 @@ public class Main {
 				System.out.println("enter your password");
 				String password = sc.next();
 				System.out.println("");
+				//check if user already exist
+				if(userService.doesUserExist(email)) {
+					System.out.println("Email is already registered with another user");
+					break;
+				}
 				// call registration method
 				boolean registration = userService
 						.register(new User(firstName, lastName, gender, dob, email, password));
@@ -58,10 +63,17 @@ public class Main {
 			case 2:
 				System.out.println("Login");
 				boolean login = false;
+				boolean userExist = false;
 				// call method to check if already login from db
+				System.out.println("enter your username");
+				String username = sc.next();
+				userExist = userService.doesUserExist(username);
+				if(!userExist) {
+					System.out.println("User does not exist");
+					break;
+				}
+				login = userService.isLoggedIn(username);
 				if (login == false) {
-					System.out.println("enter your username");
-					String username = sc.next();
 					System.out.println("enter your password");
 					String password1 = sc.next();
 					login = userService.login(new User(username, password1));
@@ -98,6 +110,7 @@ public class Main {
 					case 4:
 						System.out.println("Logging out");
 						// set login false in db
+						userService.logout(username);
 						login = false;
 						break;
 					default:
