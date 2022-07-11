@@ -105,8 +105,7 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement stmt1 = con.prepareStatement("select count(*) from Users where email = ? ");
 		stmt1.setString(1, email);
 		ResultSet rs = stmt1.executeQuery();
-		rs.next();
-		if (rs.getInt(1) == 0) {
+		if (rs.next() && rs.getInt(1) == 0) {
 			return false;
 		} else
 			return true;
@@ -120,7 +119,7 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement stmt = con.prepareStatement("update Users set is_logged_in = 0 where email = ? ");
 		stmt.setString(1, email);
 		stmt.execute();
-		return false;
+		return true;
 	}
 
 }

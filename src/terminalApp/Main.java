@@ -39,7 +39,14 @@ public class Main {
 				System.out.println("enter your gender");
 				String gender = sc.next();
 				System.out.println("enter your dob");
-				int dob = sc.nextInt();
+				int dob;
+				if(sc.hasNextInt()) {
+					dob = sc.nextInt();
+				}
+				else {
+					System.err.println("date of birth should be in numbers only DDMMYYYY");
+					break;
+				}
 				System.out.println("enter your email");
 				String email = sc.next();
 				System.out.println("enter your password");
@@ -114,7 +121,7 @@ public class Main {
 						login = false;
 						break;
 					default:
-						System.out.println("invalid input");
+						System.err.println("invalid input");
 						break;
 					}
 				}
