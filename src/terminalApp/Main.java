@@ -1,9 +1,12 @@
 package terminalApp;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
+import terminalApp.model.Tweet;
 import terminalApp.model.User;
+import terminalApp.service.TweetService;
 import terminalApp.service.UserService;
 
 public class Main {
@@ -12,6 +15,7 @@ public class Main {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
 		UserService userService = new UserService();
+		TweetService tweetService = new TweetService();
 
 		int a = 0;
 		while (a != 4) {
@@ -39,7 +43,14 @@ public class Main {
 				System.out.println("enter your gender");
 				String gender = sc.next();
 				System.out.println("enter your dob");
-				int dob = sc.nextInt();
+				int dob;
+				if(sc.hasNextInt()) {
+					dob = sc.nextInt();
+				}
+				else {
+					System.err.println("date of birth should be in numbers only DDMMYYYY");
+					break;
+				}
 				System.out.println("enter your email");
 				String email = sc.next();
 				System.out.println("enter your password");
@@ -94,18 +105,34 @@ public class Main {
 					try {
 						input1 = sc.nextInt();
 					} catch (Exception e) {
-						System.err.println("Please use valid input as 1/2/3/4\nTry again");
+						System.err.println("input should be in numbers only");
 						break;
 					}
 					switch (input1) {
 					case 1:
 						System.out.println("Showing all tweets");
+						List<Tweet> allTweets = tweetService.showAllTweets();
+						for (Tweet tweet : allTweets) {
+							System.out.println("==================================");
+							System.out.println(tweet.toString());
+							}
 						break;
 					case 2:
 						System.out.println("Showing my tweets");
+						List<Tweet> myTweets = tweetService.showTweets(username);
+						for (Tweet tweet : myTweets) {
+							System.out.println("==================================");
+							System.out.println(tweet.toString());
+							}
 						break;
 					case 3:
 						System.out.println("enter name of user whose tweet you want to see");
+						String username1 = sc.next();
+						List<Tweet> usersTweets = tweetService.showTweets(username1);
+						for (Tweet tweet : usersTweets) {
+							System.out.println("==================================");
+							System.out.println(tweet.toString());
+							}
 						break;
 					case 4:
 						System.out.println("Logging out");
@@ -114,7 +141,7 @@ public class Main {
 						login = false;
 						break;
 					default:
-						System.out.println("invalid input");
+						System.err.println("invalid input:"+input1);
 						break;
 					}
 				}
