@@ -40,7 +40,6 @@ public class UserDAOImpl implements UserDAO {
 				stmt.setString(6, user.getPassword());
 				stmt.setBoolean(7, false);
 				result = stmt.executeUpdate();
-				con.close();
 				if (result == 0)
 					return false;
 				else
@@ -67,14 +66,15 @@ public class UserDAOImpl implements UserDAO {
 		String extractedEmail = rs.getString("email");
 		System.out.println(extractedEmail);
 		String extractedPass = rs.getString("password");
-		System.out.println(extractedPass);
-
+		System.out.println(extractedPass);	
 		if (extractedEmail.equalsIgnoreCase(user.getEmail()) && extractedPass.equalsIgnoreCase(user.getPassword())) {
 			stmt = con.prepareStatement("update Users set is_logged_in = 1 where email = ? ");
 			stmt.setString(1, user.getEmail());
 			stmt.execute();
+			con.close();
 			return true;
 		} else
+			con.close();
 			return false;
 	}
 
@@ -92,8 +92,10 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement stmt = con.prepareStatement("select * from Users where email = ? ");
 		stmt.setString(1, email);
 		ResultSet rs = stmt.executeQuery();
-		if (rs.next() && rs.getBoolean(7))
+		if (rs.next() && rs.getBoolean(7)) {
+			con.close();
 			return true;
+		}
 		return false;
 	}
 
@@ -106,8 +108,10 @@ public class UserDAOImpl implements UserDAO {
 		stmt1.setString(1, email);
 		ResultSet rs = stmt1.executeQuery();
 		if (rs.next() && rs.getInt(1) == 0) {
+			con.close();
 			return false;
 		} else
+			con.close();
 			return true;
 	}
 
@@ -119,6 +123,7 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement stmt = con.prepareStatement("update Users set is_logged_in = 0 where email = ? ");
 		stmt.setString(1, email);
 		stmt.execute();
+		con.close();
 		return true;
 	}
 

@@ -8,9 +8,19 @@ public class Tweet {
 	private String body;
 	private Date date;
 
+	@Override
+	public String toString() {
+		return "Tweet [id=" + id + ", owner=" + owner + ", body=" + body + ", date=" + date + "]";
+	}
 	public Tweet(String id, String owner, String body, Date date) {
 		super();
 		this.id = id;
+		this.owner = owner;
+		this.body = body;
+		this.date = date;
+	}
+	public Tweet(String owner, String body, Date date) {
+		super();
 		this.owner = owner;
 		this.body = body;
 		this.date = date;

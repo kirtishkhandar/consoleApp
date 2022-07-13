@@ -1,9 +1,12 @@
 package terminalApp;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
+import terminalApp.model.Tweet;
 import terminalApp.model.User;
+import terminalApp.service.TweetService;
 import terminalApp.service.UserService;
 
 public class Main {
@@ -12,6 +15,7 @@ public class Main {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
 		UserService userService = new UserService();
+		TweetService tweetService = new TweetService();
 
 		int a = 0;
 		while (a != 4) {
@@ -101,15 +105,25 @@ public class Main {
 					try {
 						input1 = sc.nextInt();
 					} catch (Exception e) {
-						System.err.println("Please use valid input as 1/2/3/4\nTry again");
+						System.err.println("input should be in numbers only");
 						break;
 					}
 					switch (input1) {
 					case 1:
 						System.out.println("Showing all tweets");
+						List<Tweet> allTweets = tweetService.showAllTweets();
+						for (Tweet tweet : allTweets) {
+							System.out.println("==================================");
+							System.out.println(tweet.toString());
+							}
 						break;
 					case 2:
 						System.out.println("Showing my tweets");
+						List<Tweet> myTweets = tweetService.showMyTweets(username);
+						for (Tweet tweet : myTweets) {
+							System.out.println("==================================");
+							System.out.println(tweet.toString());
+							}
 						break;
 					case 3:
 						System.out.println("enter name of user whose tweet you want to see");
@@ -121,7 +135,7 @@ public class Main {
 						login = false;
 						break;
 					default:
-						System.err.println("invalid input");
+						System.err.println("invalid input:"+input1);
 						break;
 					}
 				}
