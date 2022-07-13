@@ -9,6 +9,6 @@ public interface TweetDAO {
 
 	List<Tweet> getAllTweets() throws ClassNotFoundException, SQLException;
 
-	List<Tweet> getMyTweets(String email) throws ClassNotFoundException, SQLException;
+	List<Tweet> getTweets(String email) throws ClassNotFoundException, SQLException;
 
 }

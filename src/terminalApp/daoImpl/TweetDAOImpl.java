@@ -43,7 +43,7 @@ public class TweetDAOImpl implements TweetDAO {
 	}
 
 	@Override
-	public List<Tweet> getMyTweets(String email) throws ClassNotFoundException, SQLException {
+	public List<Tweet> getTweets(String email) throws ClassNotFoundException, SQLException {
 		Class.forName(driverClassName);
 		Connection con = DriverManager.getConnection(url, username, password);
 

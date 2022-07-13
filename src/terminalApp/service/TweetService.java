@@ -15,8 +15,8 @@ public class TweetService {
 		return tweetDao.getAllTweets();
 	}
 
-	public List<Tweet> showMyTweets(String username) throws ClassNotFoundException, SQLException {
-		return tweetDao.getMyTweets(username);
+	public List<Tweet> showTweets(String username) throws ClassNotFoundException, SQLException {
+		return tweetDao.getTweets(username);
 	}
 
 }
