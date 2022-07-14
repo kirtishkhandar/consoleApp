@@ -42,14 +42,25 @@ public class Main {
 				String lastName = sc.next();
 				System.out.println("enter your gender");
 				String gender = sc.next();
-				System.out.println("enter your dob");
-				int dob;
-				if(sc.hasNextInt()) {
+				
+				int dob = -1;
+				/*if(sc.hasNextInt()) {
 					dob = sc.nextInt();
 				}
 				else {
 					System.err.println("date of birth should be in numbers only DDMMYYYY");
 					break;
+				}*/
+				while (dob<0) {
+					try {
+						sc.next();
+						System.out.println("enter your dob");
+						dob = sc.nextInt();						
+					} catch (Exception e) {
+						// TODO: handle exception
+						System.err.println("date of birth should be in numbers only DDMMYYYY");
+						dob = -1;
+					}
 				}
 				System.out.println("enter your email");
 				String email = sc.next();
@@ -97,7 +108,7 @@ public class Main {
 					}
 				}
 				while (login == true) {
-					String[] loginMenu = { "show all tweets", "show my tweets", "show a users tweet", "logout" };
+					String[] loginMenu = { "Post a tweet", "view all my tweets", "view all tweets", "show all users", "reset Password", "logout" };
 					for (int j = 0; j < loginMenu.length; j++) {
 						System.out.print((j + 1) + ". " + loginMenu[j] + "\n");
 					}
@@ -110,12 +121,20 @@ public class Main {
 					}
 					switch (input1) {
 					case 1:
+						System.out.println("Enter your tweet");
+						sc.nextLine();
+						String body = sc.nextLine();
+						Tweet tweet1 = new Tweet(username, body, null);
+						tweetService.post(tweet1);
+						break;
+					case 3:
 						System.out.println("Showing all tweets");
 						List<Tweet> allTweets = tweetService.showAllTweets();
 						for (Tweet tweet : allTweets) {
 							System.out.println("==================================");
 							System.out.println(tweet.toString());
 							}
+						System.out.println("\n");
 						break;
 					case 2:
 						System.out.println("Showing my tweets");
@@ -124,17 +143,18 @@ public class Main {
 							System.out.println("==================================");
 							System.out.println(tweet.toString());
 							}
-						break;
-					case 3:
-						System.out.println("enter name of user whose tweet you want to see");
-						String username1 = sc.next();
-						List<Tweet> usersTweets = tweetService.showTweets(username1);
-						for (Tweet tweet : usersTweets) {
-							System.out.println("==================================");
-							System.out.println(tweet.toString());
-							}
+						System.out.println("\n");
 						break;
 					case 4:
+						System.out.println("Users");
+						List<User> users = userService.showAllUsers();
+						for (User user : users) {
+							System.out.println("==================================");
+							System.out.println(user.toString());
+							}
+						System.out.println("\n");
+						break;
+					case 6:
 						System.out.println("Logging out");
 						// set login false in db
 						userService.logout(username);

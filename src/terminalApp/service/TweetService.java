@@ -19,4 +19,10 @@ public class TweetService {
 		return tweetDao.getTweets(username);
 	}
 
+	public boolean post(Tweet tweet1) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return tweetDao.postTweet(tweet1);
+		
+	}
+
 }
