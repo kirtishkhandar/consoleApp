@@ -37,4 +37,9 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userDao.getAllUsers();
 	}
+
+	public void resetPass(User user1) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		userDao.changePassword(user1);
+	}
 }

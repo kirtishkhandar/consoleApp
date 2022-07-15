@@ -15,7 +15,7 @@ public interface UserDAO {
 
 	public boolean logoutUser(String username) throws ClassNotFoundException, SQLException;
 
-	public boolean changePassword();
+	public boolean changePassword(User user1) throws ClassNotFoundException, SQLException;
 
 	public boolean doesUserExist(String username) throws ClassNotFoundException, SQLException;
 

@@ -84,9 +84,17 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean changePassword() {
+	public boolean changePassword(User user1) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		Class.forName(driverClassName);
+		Connection con = DriverManager.getConnection(url, username, password);
+
+		PreparedStatement stmt = con.prepareStatement("update users set password = ? where email = ?");
+		stmt.setString(1, user1.getPassword());
+		stmt.setString(2, user1.getEmail());
+		stmt.execute();
+		con.close();
+		return true;
 	}
 
 	@Override

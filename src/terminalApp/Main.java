@@ -127,19 +127,19 @@ public class Main {
 						Tweet tweet1 = new Tweet(username, body, null);
 						tweetService.post(tweet1);
 						break;
-					case 3:
-						System.out.println("Showing all tweets");
-						List<Tweet> allTweets = tweetService.showAllTweets();
-						for (Tweet tweet : allTweets) {
+					case 2:
+						System.out.println("Showing my tweets");
+						List<Tweet> myTweets = tweetService.showTweets(username);
+						for (Tweet tweet : myTweets) {
 							System.out.println("==================================");
 							System.out.println(tweet.toString());
 							}
 						System.out.println("\n");
 						break;
-					case 2:
-						System.out.println("Showing my tweets");
-						List<Tweet> myTweets = tweetService.showTweets(username);
-						for (Tweet tweet : myTweets) {
+					case 3:
+						System.out.println("Showing all tweets");
+						List<Tweet> allTweets = tweetService.showAllTweets();
+						for (Tweet tweet : allTweets) {
 							System.out.println("==================================");
 							System.out.println(tweet.toString());
 							}
@@ -153,6 +153,14 @@ public class Main {
 							System.out.println(user.toString());
 							}
 						System.out.println("\n");
+						break;
+					case 5:
+						System.out.println("Resetting your password");
+						System.out.println("Enter new password");
+						String password1 = sc.next();
+						User user1 = new User(username, password1);
+						userService.resetPass(user1);
+						System.out.println("password reset complete");
 						break;
 					case 6:
 						System.out.println("Logging out");
