@@ -11,4 +11,6 @@ public interface TweetDAO {
 
 	List<Tweet> getTweets(String email) throws ClassNotFoundException, SQLException;
 
+	boolean postTweet(Tweet tweet1) throws ClassNotFoundException, SQLException;
+
 }

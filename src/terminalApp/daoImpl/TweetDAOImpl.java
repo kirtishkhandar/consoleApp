@@ -60,4 +60,20 @@ public class TweetDAOImpl implements TweetDAO {
 		return tweets;
 	}
 
+	@Override
+	public boolean postTweet(Tweet tweet1) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Class.forName(driverClassName);
+		Connection con = DriverManager.getConnection(url, username, password);
+
+		PreparedStatement stmt = con.prepareStatement("Insert into tweets Values (?, ?, ?, ?)");
+		stmt.setString(1, null);
+		stmt.setString(2, tweet1.getOwner());
+		stmt.setString(3, tweet1.getBody());
+		stmt.setString(4, null);
+		stmt.executeUpdate();
+		con.close();
+		return true;
+	}
+
 }

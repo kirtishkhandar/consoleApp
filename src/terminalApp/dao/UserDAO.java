@@ -1,6 +1,7 @@
 package terminalApp.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import terminalApp.model.User;
 
@@ -14,8 +15,10 @@ public interface UserDAO {
 
 	public boolean logoutUser(String username) throws ClassNotFoundException, SQLException;
 
-	public boolean changePassword();
+	public boolean changePassword(User user1) throws ClassNotFoundException, SQLException;
 
 	public boolean doesUserExist(String username) throws ClassNotFoundException, SQLException;
+
+	public List<User> getAllUsers() throws ClassNotFoundException, SQLException;
 
 }

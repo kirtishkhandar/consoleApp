@@ -1,6 +1,12 @@
 package terminalApp.daoImpl;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import terminalApp.dao.UserDAO;
 import terminalApp.model.User;
@@ -61,7 +67,6 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement stmt = con.prepareStatement("select * from Users where email = ? ");
 		stmt.setString(1, user.getEmail());
 		ResultSet rs = stmt.executeQuery();
-		System.out.println("resultset: " + rs.toString());
 		rs.next();
 		String extractedEmail = rs.getString("email");
 		System.out.println(extractedEmail);
@@ -79,9 +84,17 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean changePassword() {
+	public boolean changePassword(User user1) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		Class.forName(driverClassName);
+		Connection con = DriverManager.getConnection(url, username, password);
+
+		PreparedStatement stmt = con.prepareStatement("update users set password = ? where email = ?");
+		stmt.setString(1, user1.getPassword());
+		stmt.setString(2, user1.getEmail());
+		stmt.execute();
+		con.close();
+		return true;
 	}
 
 	@Override
@@ -125,6 +138,23 @@ public class UserDAOImpl implements UserDAO {
 		stmt.execute();
 		con.close();
 		return true;
+	}
+
+	@Override
+	public List<User> getAllUsers() throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Class.forName(driverClassName);
+		Connection con = DriverManager.getConnection(url, username, password);
+
+		PreparedStatement stmt = con.prepareStatement("select firstname, lastname, email from users");
+		ResultSet rs = stmt.executeQuery();
+		List<User> users = new ArrayList<User>();
+		while (rs.next()) {
+			User user = new User(rs.getString(1), rs.getString(2), null, 0, rs.getString(3), null);
+			users.add(user);
+		}
+		con.close();
+		return users;
 	}
 
 }

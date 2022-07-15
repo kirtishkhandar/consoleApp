@@ -1,6 +1,7 @@
 package terminalApp.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import terminalApp.dao.UserDAO;
 import terminalApp.daoImpl.UserDAOImpl;
@@ -30,5 +31,15 @@ public class UserService {
 	public boolean logout(String username) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		return userDao.logoutUser(username);
+	}
+
+	public List<User> showAllUsers() throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return userDao.getAllUsers();
+	}
+
+	public void resetPass(User user1) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		userDao.changePassword(user1);
 	}
 }
