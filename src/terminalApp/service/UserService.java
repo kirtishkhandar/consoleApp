@@ -42,4 +42,9 @@ public class UserService {
 		// TODO Auto-generated method stub
 		userDao.changePassword(user1);
 	}
+
+	public boolean isDobValid(String fUsername, int fDob) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return userDao.checkUserDetails(fUsername, fDob);
+	}
 }

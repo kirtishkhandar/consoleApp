@@ -21,4 +21,6 @@ public interface UserDAO {
 
 	public List<User> getAllUsers() throws ClassNotFoundException, SQLException;
 
+	public boolean checkUserDetails(String fUsername, int fDob) throws ClassNotFoundException, SQLException;
+
 }

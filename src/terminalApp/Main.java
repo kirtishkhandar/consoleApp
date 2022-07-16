@@ -35,31 +35,23 @@ public class Main {
 			}
 			switch (a) {
 			case 1:
+				int dob = -1;
 				System.out.println("Registration:");
 				System.out.println("enter your first name");
 				String firstName = sc.next();
 				System.out.println("enter your last name");
 				String lastName = sc.next();
-				System.out.println("enter your gender");
+				System.out.println("enter your gender M/F");
 				String gender = sc.next();
-				
-				int dob = -1;
-				/*if(sc.hasNextInt()) {
-					dob = sc.nextInt();
-				}
-				else {
-					System.err.println("date of birth should be in numbers only DDMMYYYY");
-					break;
-				}*/
 				while (dob<0) {
 					try {
-						sc.next();
-						System.out.println("enter your dob");
+						System.out.println("enter your dob in DDMMYYYY");
 						dob = sc.nextInt();						
 					} catch (Exception e) {
 						// TODO: handle exception
 						System.err.println("date of birth should be in numbers only DDMMYYYY");
 						dob = -1;
+						sc.next();
 					}
 				}
 				System.out.println("enter your email");
@@ -69,7 +61,7 @@ public class Main {
 				System.out.println("");
 				//check if user already exist
 				if(userService.doesUserExist(email)) {
-					System.out.println("Email is already registered with another user");
+					System.err.println("Email is already registered with another user");
 					break;
 				}
 				// call registration method
@@ -79,7 +71,7 @@ public class Main {
 				if (registration) {
 					System.out.println("registration is successful");
 				} else {
-					System.out.println("registration is failed");
+					System.err.println("registration is failed");
 				}
 				break;
 			case 2:
@@ -104,7 +96,7 @@ public class Main {
 					if (login) {
 						System.out.println("login is successful");
 					} else {
-						System.out.println("login is failed");
+						System.err.println("login is failed");
 					}
 				}
 				while (login == true) {
@@ -175,7 +167,33 @@ public class Main {
 				}
 				break;
 			case 3:
+				int fDob = -1;
 				System.out.println("Forgot Password");
+				System.out.println("Enter your email ID");
+				String fUsername = sc.next();
+				while (fDob<0) {
+					try {
+						System.out.println("enter your dob in DDMMYYYY");
+						fDob = sc.nextInt();						
+					} catch (Exception e) {
+						// TODO: handle exception
+						System.err.println("date of birth should be in numbers only DDMMYYYY");
+						dob = -1;
+						sc.next();
+					}
+				}
+				if(userService.doesUserExist(fUsername)) {
+					if(userService.isDobValid(fUsername, fDob))
+						System.out.println("Resetting your password");
+						System.out.println("Enter new password");
+						String fpassword = sc.next();
+						User user1 = new User(fUsername, fpassword);
+						userService.resetPass(user1);
+						System.out.println("password reset complete");
+					break;
+				}
+				System.err.println("invalid details");
+				
 				break;
 			case 4:
 				System.out.println("Exiting");

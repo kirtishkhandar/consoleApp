@@ -40,8 +40,8 @@ public class UserDAOImpl implements UserDAO {
 				PreparedStatement stmt = con.prepareStatement("INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?, ?)");
 				stmt.setString(1, user.getFirstName());
 				stmt.setString(2, user.getLastName());
-				stmt.setString(3, user.getGender());
-				stmt.setLong(4, user.getDob());
+				stmt.setLong(3, user.getDob());
+				stmt.setString(4, user.getGender());
 				stmt.setString(5, user.getEmail());
 				stmt.setString(6, user.getPassword());
 				stmt.setBoolean(7, false);
@@ -69,9 +69,7 @@ public class UserDAOImpl implements UserDAO {
 		ResultSet rs = stmt.executeQuery();
 		rs.next();
 		String extractedEmail = rs.getString("email");
-		System.out.println(extractedEmail);
 		String extractedPass = rs.getString("password");
-		System.out.println(extractedPass);	
 		if (extractedEmail.equalsIgnoreCase(user.getEmail()) && extractedPass.equalsIgnoreCase(user.getPassword())) {
 			stmt = con.prepareStatement("update Users set is_logged_in = 1 where email = ? ");
 			stmt.setString(1, user.getEmail());
@@ -120,7 +118,8 @@ public class UserDAOImpl implements UserDAO {
 		PreparedStatement stmt1 = con.prepareStatement("select count(*) from Users where email = ? ");
 		stmt1.setString(1, email);
 		ResultSet rs = stmt1.executeQuery();
-		if (rs.next() && rs.getInt(1) == 0) {
+		rs.next();
+		if (rs.getInt(1) == 0) {
 			con.close();
 			return false;
 		} else
@@ -157,4 +156,20 @@ public class UserDAOImpl implements UserDAO {
 		return users;
 	}
 
+	@Override
+	public boolean checkUserDetails(String fUsername, int fDob) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Class.forName(driverClassName);
+		Connection con = DriverManager.getConnection(url, username, password);
+
+		PreparedStatement stmt = con.prepareStatement("select * from Users where email = ? ");
+		stmt.setString(1,fUsername);
+		ResultSet rs = stmt.executeQuery();
+		rs.next();
+		int dob = rs.getInt("dob");
+		if (dob == fDob) {
+			return true;
+		} else
+			return false;
+	}
 }
