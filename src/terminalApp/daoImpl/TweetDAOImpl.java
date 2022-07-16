@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import terminalApp.dao.TweetDAO;
@@ -66,11 +67,13 @@ public class TweetDAOImpl implements TweetDAO {
 		Class.forName(driverClassName);
 		Connection con = DriverManager.getConnection(url, username, password);
 
+		java.sql.Date sqlDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
 		PreparedStatement stmt = con.prepareStatement("Insert into tweets Values (?, ?, ?, ?)");
 		stmt.setString(1, null);
 		stmt.setString(2, tweet1.getOwner());
 		stmt.setString(3, tweet1.getBody());
-		stmt.setString(4, null);
+		stmt.setDate(4, sqlDate);
 		stmt.executeUpdate();
 		con.close();
 		return true;
